@@ -1,0 +1,38 @@
+<div style="margin-bottom:10px;font-size:0.85rem;color:#555">
+  <strong>{{ result.text_length }}</strong> caracteres &middot;
+  <strong>{{ result.tokens_out_assumed }}</strong> tokens de salida asumidos &middot;
+  Mas barato: <strong>{{ result.cheapest }}</strong> &middot;
+  Mayor contexto: <strong>{{ result.largest_context }}</strong>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Modelo</th>
+      <th>Provider</th>
+      <th style="text-align:right">Tokens</th>
+      <th style="text-align:center">Metodo</th>
+      <th style="text-align:right">Ctx max</th>
+      <th style="text-align:center">Cabe?</th>
+      <th style="text-align:right">Costo total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for model_id, mr in result.by_model.items() %}
+    <tr>
+      <td>
+        {{ model_id }}
+        {% if model_id == result.cheapest %}<span class="badge-cheap">barato</span>{% endif %}
+        {% if model_id == result.largest_context %}<span class="badge-ctx">ctx</span>{% endif %}
+      </td>
+      <td>{{ mr.provider }}</td>
+      <td style="text-align:right">{{ mr.tokens }}</td>
+      <td style="text-align:center" {% if mr.token_method == 'estimated' %}class="estimated"{% endif %}>
+        {{ "~est." if mr.token_method == 'estimated' else "exacto" }}
+      </td>
+      <td style="text-align:right">{{ "{:,}".format(mr.context_window) }}</td>
+      <td style="text-align:center">{{ "SI" if mr.fits_in_context else "NO" }}</td>
+      <td style="text-align:right;font-weight:600">${{ "%.7f" | format(mr.cost.total_usd) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Contador</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f5f5; color: #222; }
+    nav { background: #1a1a2e; color: white; padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+    nav h1 { font-size: 1.2rem; }
+    nav .subtitle { color: #aaa; font-size: 0.85rem; }
+    main { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 6px; }
+    textarea, input[type=number] { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 10px; font-size: 0.9rem; }
+    textarea { height: 100px; resize: vertical; }
+    button { background: #1565c0; color: white; border: none; border-radius: 6px; padding: 8px 20px; cursor: pointer; font-size: 0.9rem; }
+    button:hover { background: #0d47a1; }
+    .btn-secondary { background: #e65100; }
+    .btn-secondary:hover { background: #bf360c; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { background: #e0e0e0; padding: 8px 12px; text-align: left; }
+    td { padding: 7px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:hover td { background: #fafafa; }
+    .badge-cheap { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; }
+    .badge-ctx { background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; }
+    .estimated { color: #f57c00; }
+    .providers { display: flex; flex-wrap: wrap; gap: 8px; }
+    .providers label { font-weight: 400; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+    #results { min-height: 40px; }
+    .htmx-indicator { display: none; }
+    .htmx-request .htmx-indicator { display: inline; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Token Contador</h1>
+    <span class="subtitle">Analizador de tokens y costos LLM</span>
+  </nav>
+  <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

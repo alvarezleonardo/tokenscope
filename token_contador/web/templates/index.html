@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<form hx-post="/analyze" hx-target="#results" hx-swap="innerHTML" hx-indicator="#spinner">
+  <div class="grid-2">
+    <div class="card">
+      <label>Texto a analizar</label>
+      <textarea name="text" placeholder="Pega tu prompt aqui..."></textarea>
+      <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+        <label style="margin:0">Tokens de salida estimados:</label>
+        <input type="number" name="tokens_out" value="500" style="width:100px">
+        <button type="submit">Analizar</button>
+        <span id="spinner" class="htmx-indicator" style="color:#888;font-size:0.85rem">Calculando...</span>
+      </div>
+    </div>
+    <div class="card">
+      <label>Filtrar providers (vacio = todos)</label>
+      <div class="providers">
+        {% for provider in providers %}
+        <label>
+          <input type="checkbox" name="providers" value="{{ provider }}"> {{ provider }}
+        </label>
+        {% endfor %}
+      </div>
+      <div style="margin-top:16px">
+        <button type="button" class="btn-secondary"
+          hx-post="/refresh"
+          hx-vals='{"providers": []}'
+          hx-on::after-request="alert('Precios actualizados')">
+          Actualizar precios
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="card" id="results">
+  <p style="color:#888;text-align:center;padding:20px">Ingresa un texto para ver la comparativa.</p>
+</div>
+{% endblock %}
