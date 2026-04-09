@@ -31,3 +31,6 @@ where = ["."]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+[tool.setuptools.package-data]
+token_contador = ["data/*.yaml"]
