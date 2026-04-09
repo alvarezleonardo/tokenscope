@@ -5,3 +5,5 @@ __pycache__/
 dist/
 *.egg-info/
 .superpowers/
+.DS_Store
+build/
