@@ -251,3 +251,7 @@ El core es independiente — CLI y Web son clientes del mismo core.
 ## Licencia
 
 MIT — ver [LICENSE](LICENSE).
+
+---
+
+Desarrollado por Leonardo Alvarez
