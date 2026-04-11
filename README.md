@@ -1,14 +1,41 @@
 # Token Contador
 
-Herramienta para analizar y comparar el uso de tokens y costos entre modelos LLM.
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Models](https://img.shields.io/badge/models-22-orange)
+![Providers](https://img.shields.io/badge/providers-9-purple)
 
-**22 modelos · 9 providers · CLI + Web App + Librería Python**
+**Analizá y compará tokens y costos entre los principales modelos LLM — desde la terminal, el navegador o tu código Python.**
+
+Antes de enviar un prompt a producción, ¿sabés cuánto te va a costar? ¿Cabe en el contexto del modelo que elegiste? ¿Hay una alternativa 10x más barata con la misma ventana de contexto?
+
+**Token Contador** responde esas preguntas en milisegundos.
+
+---
+
+## Características
+
+- **22 modelos · 9 providers** — Anthropic, OpenAI, Google, Meta, Mistral, Cohere, Deepseek
+- **Conteo exacto** para modelos OpenAI/Anthropic via tiktoken; estimación por ratio para el resto
+- **Comparativa de costos** (entrada + salida asumida) ordenada de menor a mayor
+- **Ventana de contexto** — indica si tu texto cabe en cada modelo
+- **CLI** con salida en tabla, JSON o CSV
+- **Web App** interactiva (FastAPI + HTMX, sin frameworks JS)
+- **Librería Python** para integrar en tus scripts o notebooks
+- **Modelos custom** — agregá los tuyos via `~/.token_contador/custom_models.yaml`
+- **Precios actualizables** con un comando (scraper desde fuentes oficiales)
+
+---
 
 ## Instalación
 
 ```bash
+git clone https://github.com/tu-usuario/token-contador
+cd token-contador
 pip install -e ".[dev]"
 ```
+
+---
 
 ## CLI
 
@@ -94,6 +121,8 @@ token-count web
 # → http://localhost:8000
 ```
 
+---
+
 ## Web App
 
 ```bash
@@ -102,11 +131,13 @@ token-count web
 
 Abrí `http://localhost:8000` — interfaz visual con tabla comparativa en tiempo real:
 
-- Pegá tu texto o cargá un archivo
+- Pegá tu texto en el textarea (contador de chars y tokens en vivo)
 - Seleccioná providers con checkboxes
 - Ajustá tokens de salida estimados
 - La tabla se actualiza sin recargar la página (HTMX)
 - Botón para actualizar precios desde fuentes oficiales
+
+---
 
 ## Librería Python
 
@@ -146,6 +177,8 @@ for i, r in enumerate(results):
     print(f"Texto {i+1}: {r.by_model['gpt-4o'].tokens} tokens — ${r.by_model['gpt-4o'].cost.total_usd:.6f}")
 ```
 
+---
+
 ## Providers incluidos
 
 | Provider   | Modelos                                                  | Tokenizer       |
@@ -160,9 +193,12 @@ for i, r in enumerate(results):
 
 > **`~`** = conteo estimado (chars / ratio). **`✓`** = conteo exacto via tiktoken.
 
+---
+
 ## Agregar modelos custom
 
-Creá `~/.token_contador/custom_models.yaml` con el mismo formato que `models.yaml`:
+Creá `~/.token_contador/custom_models.yaml` con el mismo formato que `models.yaml`.
+Los modelos custom se mezclan con los incluidos y aparecen en todos los comandos y la web app.
 
 ```yaml
 models:
@@ -177,6 +213,8 @@ models:
     pricing_url: https://mi-empresa.com/pricing
     updated_at: "2026-04-09"
 ```
+
+---
 
 ## Desarrollo
 
@@ -194,6 +232,8 @@ pytest tests/unit/
 pytest tests/test_cli.py
 ```
 
+---
+
 ## Arquitectura
 
 ```
@@ -205,3 +245,9 @@ token_contador/
 ```
 
 El core es independiente — CLI y Web son clientes del mismo core.
+
+---
+
+## Licencia
+
+MIT — ver [LICENSE](LICENSE).

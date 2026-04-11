@@ -4,16 +4,21 @@
   <div class="grid-2">
     <div class="card">
       <label>Texto a analizar</label>
-      <textarea name="text" placeholder="Pega tu prompt aqui..."></textarea>
+      <textarea id="main-text" name="text" placeholder="Pegá tu prompt aquí..." oninput="updateCounter(this)"></textarea>
+      <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between">
+        <div id="counter" style="font-size:0.78rem;color:#888">
+          <span id="cnt-chars">0</span> chars &nbsp;·&nbsp; ~<span id="cnt-tokens">0</span> tokens (estimado)
+        </div>
+        <span id="spinner" class="htmx-indicator" style="color:#888;font-size:0.82rem">Calculando...</span>
+      </div>
       <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
-        <label style="margin:0">Tokens de salida estimados:</label>
-        <input type="number" name="tokens_out" value="500" style="width:100px">
+        <label style="margin:0;font-size:0.85rem">Tokens de salida:</label>
+        <input type="number" name="tokens_out" value="500" style="width:90px">
         <button type="submit">Analizar</button>
-        <span id="spinner" class="htmx-indicator" style="color:#888;font-size:0.85rem">Calculando...</span>
       </div>
     </div>
     <div class="card">
-      <label>Filtrar providers (vacio = todos)</label>
+      <label>Filtrar providers (vacío = todos)</label>
       <div class="providers">
         {% for provider in providers %}
         <label>
@@ -26,7 +31,7 @@
           hx-post="/refresh"
           hx-vals='{"providers": []}'
           hx-on::after-request="alert('Precios actualizados')">
-          Actualizar precios
+          ↻ Actualizar precios
         </button>
       </div>
     </div>
@@ -34,6 +39,17 @@
 </form>
 
 <div class="card" id="results">
-  <p style="color:#888;text-align:center;padding:20px">Ingresa un texto para ver la comparativa.</p>
+  <p style="color:#888;text-align:center;padding:20px">Ingresá un texto para ver la comparativa.</p>
 </div>
+
+<script>
+function updateCounter(ta) {
+  const text = ta.value;
+  const chars = text.length;
+  // Estimación rápida: ~4 chars/token (igual que el backend para modelos sin tokenizer exacto)
+  const tokens = chars > 0 ? Math.max(1, Math.round(chars / 4)) : 0;
+  document.getElementById('cnt-chars').textContent = chars.toLocaleString();
+  document.getElementById('cnt-tokens').textContent = tokens.toLocaleString();
+}
+</script>
 {% endblock %}
