@@ -2,8 +2,8 @@
 
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Models](https://img.shields.io/badge/models-22-orange)
-![Providers](https://img.shields.io/badge/providers-9-purple)
+![Models](https://img.shields.io/badge/models-19-orange)
+![Providers](https://img.shields.io/badge/providers-7-purple)
 
 **Analizá y compará tokens y costos entre los principales modelos LLM — desde la terminal, el navegador o tu código Python.**
 
@@ -15,8 +15,8 @@ Antes de enviar un prompt a producción, ¿sabés cuánto te va a costar? ¿Cabe
 
 ## Características
 
-- **22 modelos · 9 providers** — Anthropic, OpenAI, Google, Meta, Mistral, Cohere, Deepseek
-- **Conteo exacto** para modelos OpenAI/Anthropic via tiktoken; estimación por ratio para el resto
+- **19 modelos · 7 providers** — Anthropic, OpenAI, Google, Meta, Mistral, Cohere, Deepseek
+- **Conteo exacto** para OpenAI (tiktoken o200k) y Anthropic (tokenizer real de Claude vía HF); estimación por ratio para el resto
 - **Comparativa de costos** (entrada + salida asumida) ordenada de menor a mayor
 - **Ventana de contexto** — indica si tu texto cabe en cada modelo
 - **CLI** con salida en tabla, JSON o CSV
@@ -46,19 +46,19 @@ token-count analyze "Explicame qué es una red neuronal"
 ```
 
 ```
-                   Análisis — 36 chars · 500 tokens out asumidos
-┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━┓
-┃ Modelo          ┃ Provider  ┃ Tokens ┃ Método ┃   Ctx max ┃ ¿Cabe? ┃ Costo total ┃
-┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━┩
-│ 💰 llama-3.1-8b │ meta      │     9  │   ~    │   128,000 │   ✅   │   $0.000005 │
-│ deepseek-v3     │ deepseek  │    10  │   ~    │    64,000 │   ✅   │   $0.000015 │
-│ gemini-2.0-fl.. │ google    │     9  │   ~    │ 1,000,000 │   ✅   │   $0.000151 │
-│ gpt-4o          │ openai    │     9  │   ✓    │   128,000 │   ✅   │   $0.005023 │
-│ claude-sonnet.. │ anthropic │     9  │   ✓    │   200,000 │   ✅   │   $0.007527 │
-│ 📏 gemini-1.5-p │ google    │     9  │   ~    │ 2,000,000 │   ✅   │   $0.002523 │
-└─────────────────┴───────────┴────────┴────────┴───────────┴────────┴─────────────┘
+                   Análisis — 33 chars · 500 tokens out asumidos
+┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━┓
+┃ Modelo           ┃ Provider  ┃ Tokens ┃ Método ┃   Ctx max ┃ ¿Cabe? ┃ Costo total ┃
+┡━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━┩
+│ 💰 llama-3.1-8b  │ meta      │     9  │   ~    │   128,000 │   ✅   │   $0.000005 │
+│ deepseek-v3      │ deepseek  │    10  │   ~    │    64,000 │   ✅   │   $0.000015 │
+│ gpt-4o           │ openai    │     9  │   ✓    │   128,000 │   ✅   │   $0.005023 │
+│ 📏 gemini-2.5-pr │ google    │     9  │   ~    │ 1,000,000 │   ✅   │   $0.005011 │
+│ claude-haiku-4-5 │ anthropic │    10  │   ✓    │   200,000 │   ✅   │   $0.005010 │
+│ claude-opus-4-8  │ anthropic │    10  │   ✓    │ 1,000,000 │   ✅   │   $0.012550 │
+└──────────────────┴───────────┴────────┴────────┴───────────┴────────┴─────────────┘
 
-💰 Más barato: llama-3.1-8b    📏 Mayor contexto: gemini-1.5-pro
+💰 Más barato: llama-3.1-8b    📏 Mayor contexto: gemini-2.5-pro
 ```
 
 ### Filtrar providers
@@ -78,7 +78,7 @@ token-count analyze "tu prompt" --format json
   "text_length": 10,
   "tokens_out_assumed": 500,
   "cheapest": "llama-3.1-8b",
-  "largest_context": "gemini-1.5-pro",
+  "largest_context": "gemini-2.5-pro",
   "by_model": {
     "gpt-4o": {
       "provider": "openai",
@@ -148,7 +148,7 @@ from token_contador import analyze, compare
 result = analyze("Hola, ¿cómo estás?")
 
 print(result.cheapest)           # "llama-3.1-8b"
-print(result.largest_context)    # "gemini-1.5-pro"
+print(result.largest_context)    # "gemini-2.5-pro"
 print(result.text_length)        # 18
 
 # Ver resultado de un modelo específico
@@ -181,17 +181,17 @@ for i, r in enumerate(results):
 
 ## Providers incluidos
 
-| Provider   | Modelos                                                  | Tokenizer       |
-|------------|----------------------------------------------------------|-----------------|
-| Anthropic  | claude-opus-4-6, claude-sonnet-4-6, claude-haiku-4-5     | tiktoken exacto |
-| OpenAI     | gpt-4o, gpt-4o-mini, o1, o1-mini, o3-mini               | tiktoken exacto |
-| Google     | gemini-2.0-flash, gemini-2.5-pro, gemini-1.5-pro/flash  | estimado        |
-| Meta       | llama-3.1-8b, llama-3.1-70b, llama-3.3-70b              | HF / estimado   |
-| Mistral    | mistral-large, mistral-small, codestral                  | HF / estimado   |
-| Cohere     | command-r-plus, command-r                                | estimado        |
-| Deepseek   | deepseek-v3, deepseek-r1                                 | estimado        |
+| Provider   | Modelos                                                    | Tokenizer            |
+|------------|------------------------------------------------------------|----------------------|
+| Anthropic  | claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5       | Claude real (HF) ✓   |
+| OpenAI     | gpt-5.5, gpt-5.4, gpt-5.4-nano, gpt-4o, gpt-4o-mini        | tiktoken o200k ✓     |
+| Google     | gemini-2.5-pro, gemini-2.5-flash, gemini-2.0-flash        | estimado             |
+| Meta       | llama-3.3-70b, llama-3.1-8b                                | HF / estimado        |
+| Mistral    | mistral-large, mistral-small                               | HF / estimado        |
+| Cohere     | command-r-plus, command-r                                  | estimado             |
+| Deepseek   | deepseek-v3, deepseek-r1                                   | estimado             |
 
-> **`~`** = conteo estimado (chars / ratio). **`✓`** = conteo exacto via tiktoken.
+> **`~`** = conteo estimado (chars / ratio). **`✓`** = conteo exacto (tiktoken para OpenAI, tokenizer real de Claude para Anthropic).
 
 ---
 
