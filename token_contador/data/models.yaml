@@ -1,86 +1,76 @@
 models:
-- id: claude-opus-4-6
+- id: claude-opus-4-8
   provider: anthropic
-  context_window: 200000
-  tokenizer: tiktoken-cl100k
-  input_per_1m: 15.0
-  output_per_1m: 75.0
-  cached_input_per_1m: 1.5
-  pricing_url: https://www.anthropic.com/pricing
-  updated_at: '2026-04-09'
+  context_window: 1000000
+  tokenizer: hf:Xenova/claude-tokenizer
+  input_per_1m: 5.0
+  output_per_1m: 25.0
+  cached_input_per_1m: 0.5
+  pricing_url: https://platform.claude.com/docs/en/about-claude/pricing
+  updated_at: '2026-07-10'
 - id: claude-sonnet-4-6
   provider: anthropic
-  context_window: 200000
-  tokenizer: tiktoken-cl100k
+  context_window: 1000000
+  tokenizer: hf:Xenova/claude-tokenizer
   input_per_1m: 3.0
   output_per_1m: 15.0
   cached_input_per_1m: 0.3
-  pricing_url: https://www.anthropic.com/pricing
-  updated_at: '2026-04-09'
+  pricing_url: https://platform.claude.com/docs/en/about-claude/pricing
+  updated_at: '2026-07-10'
 - id: claude-haiku-4-5
   provider: anthropic
   context_window: 200000
-  tokenizer: tiktoken-cl100k
-  input_per_1m: 0.8
-  output_per_1m: 4.0
-  cached_input_per_1m: 0.08
-  pricing_url: https://www.anthropic.com/pricing
-  updated_at: '2026-04-09'
+  tokenizer: hf:Xenova/claude-tokenizer
+  input_per_1m: 1.0
+  output_per_1m: 5.0
+  cached_input_per_1m: 0.1
+  pricing_url: https://platform.claude.com/docs/en/about-claude/pricing
+  updated_at: '2026-07-10'
+- id: gpt-5.5
+  provider: openai
+  context_window: 400000
+  tokenizer: tiktoken-o200k
+  input_per_1m: 5.0
+  output_per_1m: 30.0
+  cached_input_per_1m: 0.5
+  pricing_url: https://developers.openai.com/api/docs/pricing
+  updated_at: '2026-07-10'
+- id: gpt-5.4
+  provider: openai
+  context_window: 400000
+  tokenizer: tiktoken-o200k
+  input_per_1m: 2.5
+  output_per_1m: 15.0
+  cached_input_per_1m: 0.25
+  pricing_url: https://developers.openai.com/api/docs/pricing
+  updated_at: '2026-07-10'
+- id: gpt-5.4-nano
+  provider: openai
+  context_window: 400000
+  tokenizer: tiktoken-o200k
+  input_per_1m: 0.2
+  output_per_1m: 1.25
+  cached_input_per_1m: null
+  pricing_url: https://developers.openai.com/api/docs/pricing
+  updated_at: '2026-07-10'
 - id: gpt-4o
   provider: openai
   context_window: 128000
-  tokenizer: tiktoken-cl100k
+  tokenizer: tiktoken-o200k
   input_per_1m: 2.5
   output_per_1m: 10.0
   cached_input_per_1m: 1.25
-  pricing_url: https://openai.com/api/pricing/
-  updated_at: '2026-04-09'
+  pricing_url: https://developers.openai.com/api/docs/pricing
+  updated_at: '2026-07-10'
 - id: gpt-4o-mini
   provider: openai
   context_window: 128000
-  tokenizer: tiktoken-cl100k
+  tokenizer: tiktoken-o200k
   input_per_1m: 0.15
   output_per_1m: 0.6
   cached_input_per_1m: 0.075
-  pricing_url: https://openai.com/api/pricing/
-  updated_at: '2026-04-09'
-- id: o1
-  provider: openai
-  context_window: 200000
-  tokenizer: tiktoken-cl100k
-  input_per_1m: 15.0
-  output_per_1m: 60.0
-  cached_input_per_1m: 7.5
-  pricing_url: https://openai.com/api/pricing/
-  updated_at: '2026-04-09'
-- id: o1-mini
-  provider: openai
-  context_window: 128000
-  tokenizer: tiktoken-cl100k
-  input_per_1m: 1.1
-  output_per_1m: 4.4
-  cached_input_per_1m: 0.55
-  pricing_url: https://openai.com/api/pricing/
-  updated_at: '2026-04-09'
-- id: o3-mini
-  provider: openai
-  context_window: 200000
-  tokenizer: tiktoken-cl100k
-  input_per_1m: 1.1
-  output_per_1m: 4.4
-  cached_input_per_1m: 0.55
-  pricing_url: https://openai.com/api/pricing/
-  updated_at: '2026-04-09'
-- id: gemini-2.0-flash
-  provider: google
-  context_window: 1000000
-  tokenizer: estimated
-  chars_per_token: 4.0
-  input_per_1m: 0.075
-  output_per_1m: 0.3
-  cached_input_per_1m: 0.01875
-  pricing_url: https://ai.google.dev/pricing
-  updated_at: '2026-04-09'
+  pricing_url: https://developers.openai.com/api/docs/pricing
+  updated_at: '2026-07-10'
 - id: gemini-2.5-pro
   provider: google
   context_window: 1000000
@@ -90,45 +80,27 @@ models:
   output_per_1m: 10.0
   cached_input_per_1m: 0.3125
   pricing_url: https://ai.google.dev/pricing
-  updated_at: '2026-04-09'
-- id: gemini-1.5-pro
+  updated_at: '2026-07-10'
+- id: gemini-2.5-flash
   provider: google
-  context_window: 2000000
+  context_window: 1000000
   tokenizer: estimated
   chars_per_token: 4.0
-  input_per_1m: 1.25
-  output_per_1m: 5.0
-  cached_input_per_1m: null
+  input_per_1m: 0.3
+  output_per_1m: 2.5
+  cached_input_per_1m: 0.075
   pricing_url: https://ai.google.dev/pricing
-  updated_at: '2026-04-09'
-- id: gemini-1.5-flash
+  updated_at: '2026-07-10'
+- id: gemini-2.0-flash
   provider: google
   context_window: 1000000
   tokenizer: estimated
   chars_per_token: 4.0
   input_per_1m: 0.075
   output_per_1m: 0.3
-  cached_input_per_1m: null
+  cached_input_per_1m: 0.01875
   pricing_url: https://ai.google.dev/pricing
-  updated_at: '2026-04-09'
-- id: llama-3.1-8b
-  provider: meta
-  context_window: 128000
-  tokenizer: hf:meta-llama/Meta-Llama-3.1-8B
-  input_per_1m: 0.05
-  output_per_1m: 0.08
-  cached_input_per_1m: null
-  pricing_url: https://groq.com/pricing
-  updated_at: '2026-04-09'
-- id: llama-3.1-70b
-  provider: meta
-  context_window: 128000
-  tokenizer: hf:meta-llama/Meta-Llama-3.1-70B
-  input_per_1m: 0.59
-  output_per_1m: 0.79
-  cached_input_per_1m: null
-  pricing_url: https://groq.com/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: llama-3.3-70b
   provider: meta
   context_window: 128000
@@ -137,7 +109,16 @@ models:
   output_per_1m: 0.79
   cached_input_per_1m: null
   pricing_url: https://groq.com/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
+- id: llama-3.1-8b
+  provider: meta
+  context_window: 128000
+  tokenizer: hf:meta-llama/Meta-Llama-3.1-8B
+  input_per_1m: 0.05
+  output_per_1m: 0.08
+  cached_input_per_1m: null
+  pricing_url: https://groq.com/pricing
+  updated_at: '2026-07-10'
 - id: mistral-large
   provider: mistral
   context_window: 128000
@@ -146,7 +127,7 @@ models:
   output_per_1m: 6.0
   cached_input_per_1m: null
   pricing_url: https://mistral.ai/technology/
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: mistral-small
   provider: mistral
   context_window: 32000
@@ -155,16 +136,7 @@ models:
   output_per_1m: 0.6
   cached_input_per_1m: null
   pricing_url: https://mistral.ai/technology/
-  updated_at: '2026-04-09'
-- id: codestral
-  provider: mistral
-  context_window: 32000
-  tokenizer: hf:mistralai/Codestral-22B-v0.1
-  input_per_1m: 0.3
-  output_per_1m: 0.9
-  cached_input_per_1m: null
-  pricing_url: https://mistral.ai/technology/
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: command-r-plus
   provider: cohere
   context_window: 128000
@@ -174,7 +146,7 @@ models:
   output_per_1m: 10.0
   cached_input_per_1m: null
   pricing_url: https://cohere.com/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: command-r
   provider: cohere
   context_window: 128000
@@ -184,7 +156,7 @@ models:
   output_per_1m: 0.6
   cached_input_per_1m: null
   pricing_url: https://cohere.com/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: deepseek-v3
   provider: deepseek
   context_window: 64000
@@ -194,7 +166,7 @@ models:
   output_per_1m: 0.28
   cached_input_per_1m: 0.014
   pricing_url: https://api-docs.deepseek.com/quick_start/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
 - id: deepseek-r1
   provider: deepseek
   context_window: 64000
@@ -204,4 +176,4 @@ models:
   output_per_1m: 2.19
   cached_input_per_1m: 0.14
   pricing_url: https://api-docs.deepseek.com/quick_start/pricing
-  updated_at: '2026-04-09'
+  updated_at: '2026-07-10'
